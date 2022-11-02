@@ -24,20 +24,18 @@ class usuario {
         )
     }
     getBookNames(){
-        let nombresLibros = []
-        for(let i= 0; i < this.libros.length; i++){
-            nombresLibros.push(this.libros[i].nombre)
-        }
-        
-        return console.log(nombresLibros) 
+        return this.libros.map((libros)=> libros.nombre)
     }
-}
+}1
 
 const prueba = new usuario ("Fabián", "Del Campo", [{nombre:"Cronicas de una muerte anunciada", autor:"Gabriel Garcia Marquez"}], ["Oli","Mili","Luna"])
 prueba.getFullName(prueba)
 prueba.addMascota("Mascota Agregada")
 prueba.countMascotas(prueba)
 prueba.addBook("libro agregado","Un autor")
+prueba.addBook("otro libro agregado","Otro autor")
 prueba.getBookNames()
 
 
+const libros = prueba.getBookNames()
+console.log(libros) 

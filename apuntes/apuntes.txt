@@ -1,0 +1,69 @@
+//Callback : Funciones pasadas como parametro
+// La idea es que la funcion "contenedora" ejecute la funcion que es pasada por parametro
+// en este ejemplo "saludar()" vendria a ser la funcion contenedora que va a ejecutar a "saludo()"
+
+//Funcion para pasar como parametro (Callback)
+/* let saludo = () => {
+    console.log("Que onda")
+} */
+
+//Función que llama a otra función
+/* function saludar (paramFuncion) {
+    // ↓ ↓ ↓    ejecutamos la función 
+    paramFuncion()
+}  */
+
+//saludar(saludo)
+
+// Promesas: encapsula una operacióm. Cuando se completa permite definir acciones segun el tipo de resultado
+/* Estados de una Promesa: 
+Pendiente: La promesa no fue resuelta.
+resolve: La promesa fue resualta con exito - su resultado sera manejado por el callback asignado mediante el metodo .then()
+reject: La promesa fue resuelta con un error - su resultado sera manejado por el callback asignado mediante el metodo .catch()
+
+*/
+
+// Sincrono ejemplo
+
+function a (){
+    console.log(1)
+    b()//aca se "pausa" la ejecucion a y empieza a ejecutar la función b 
+    console.log(2)
+    
+}
+function b (){
+    console.log(3)
+    c()//aca se "pausa" la ejecucion b y empieza a ejecutar la función c
+    console.log(4);
+    
+}
+function c () {
+    console.log(5) //  ↑ ↑ ↑  Se termina de ejecutar C y B retoma su ejecución  
+}
+a()
+
+/* En todo momento se estan ejecutando las instrucciones de una sola de las funciones a la vez. Osea, debe finalizar una de las funciones antes de pasar a la otra */
+
+//fs: fyle system. Es un modulo nativo de nodejs. En nodeJs se pueden manipular archivos a traves del "fs"
+//Con el require podemos acceder a funciones y clases exportados de otros programas
+//fs.readFile() Lee un archivo
+
+//  operaciones sincronicas 
+//  readFileSync: lectura de un archivo en forma sincrónica
+//  writeFileSync: escritura de un archivo en forma sincrónica. Si ya hay algo escrito en el archivo, borra todo y empieza a escribir desde 0
+//  appendFileSync: actualización de un archivo en forma sincrónica. Si ya hay algo escrito en el archivo, empieza a escribir desde el final 
+//  unlinkSync: borrado de un archivo en forma sincrónica
+//  mkdirSync: creación de una carpeta
+
+//fs.writeFileSync("rutadelarchivo", "Texto a sobreescribir") Si la ruta es valida pero el archivo no existe, se creara un nuevo archivo con los cambios
+
+// operaciones asincronicas
+
+//  readFile: lectura de un archivo en forma sincrónica
+//  writeFile: escritura de un archivo en forma sincrónica. Si ya hay algo escrito en el archivo, borra todo y empieza a escribir desde 0
+//  appendFile: actualización de un archivo en forma sincrónica. Si ya hay algo escrito en el archivo, empieza a escribir desde el final 
+//  unlink: borrado de un archivo en forma sincrónica
+//  mkdir: creación de una carpeta
+
+//fs con callbacks : reciben un nuevo ultimo parametro: un callbac
+
