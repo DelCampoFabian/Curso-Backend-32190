@@ -65,5 +65,123 @@ a()
 //  unlink: borrado de un archivo en forma sincrónica
 //  mkdir: creación de una carpeta
 
-//fs con callbacks : reciben un nuevo ultimo parametro: un callbac
+//fs con callbacks : reciben un nuevo ultimo parametro: un callback
+
+
+nodeJs: Entorno de ejecucion de Js. Incluye todo lo que se necesita para ejecutar un programa escrito en JS por fuera del navegador
+
+// Modulos nativos en Node Js
+Un módulo es un conjunto de funciones y objetos de JavaScript que las aplicaciones externas pueden usar.
+
+// Administradores de paquetes 
+Los Package Managers sirven para no tener que descargar, instalar y mantener las dependencias(modulo, paquete, librerias, etc.(tienen bastantes sinonimos)) de un proyecto a mano. 
+
+// NPM es el administrador de paquetes propio de Node
+Las dependencias pueden instalarse en forma
+global : Todos los proyectos de NodeJS que hay en nuestra computadora
+local : Proyecto en el cual estoy parado (mayormente usada)
+Si instalamos una dependencia en forma global, todos nuestros programas desarrollados en NodeJS contarán con esa librería, y con la versión que haya sido instalada.
+En cambio, si instalamos en forma local, podremos elegir exactamente qué librería y con qué versión contará cada proyecto que desarrollemos.
+
+//Package.JSON
+Es un archivo de configuración en formato JSON
+Es toda la metadata(información) del proyecto 
+Podemos crearlo mediante la instrucción: npm init // npm init -y lo crea de manera default
+EJ util: tenemos un proyecto de transacciones de pago. Nuestros datos serian las transacciones de los pagos y nuestra metadata seria es COMO SE CONFIGURO EL PROYECTO
+Podemos especificar en este archivo la lista de dependencias, que son las librerías que usa el proyecto para funcionar o para realizar distintos tipos de testing.
+Siempre que hayamos especificado nuestras dependencias en el archivo de configuración (package.json) podremos actualizar y mantener de forma fácil y segura las dependencias del proyecto con el comando npm install
+
+
+//Versionado 
+EJEMPLO: 3.0.7
+Major Release: El primer número corresponde a actualizaciones grandes/significativas que incluyen muchas nuevas características, o que cambian de manera significativa el funcionamiento de las existentes. 
+Minor Release: El segundo número corresponde a actualizaciones pequeñas que agregan pocas cosas nuevas o actualizan algún detalle del funcionamiento de la librería.
+Patches: El tercer número corresponde a arreglos o parches que corrigen defectos en las funcionalidades de la librería. 
+
+//Manejo avanzado de Versionado
+Cada una de las versiones de las dependencias está precedida por un símbolo ( ~ ^ * ) que indica la forma en la que deseamos que se actualice ese módulo cada vez que ejecutemos npm install
+
+//Solo Patches
+Si escribimos en nuestro package.json: → ~ ← ~0.13.0 se actualizan Patches
+
+
+//Patches y actualizaciones menores 
+
+Si escribimos en nuestro package.json:  → ^ ← ^0.13.0 se actualizan Patches y actualizaciones menores 
+
+
+//Todas las actualizaciones
+
+Si escribimos en nuestro package.json: *0.13.0  Se actualiza todo
+
+//Nodemon
+Nodemon nos ayuda en el desarrollo relanzando la ejecución de Node.js en el caso de que algún archivo de nuestro proyecto cambie.
+
+diferencia entre servidor web y nuestro progamas de vsc 
+los de vsc empiezan y terminan
+y los servidores web lo iniciamos y no tiene fin  a noser que nosotros lo terminamos
+
+
+//HTTP : modulo nativo de NodeJS
+
+Trabaja con el protocolo HTTP, que es el que se utiliza en Internet para transferir datos en la Web.
+Nos va a servir para crear un servidor HTTP que acepte solicitudes desde un cliente web.
+Llamado: require ('http').
+
+//  const htttp = require ("http")  //
+
+
+
+//  const server = http.createServer((peticion, respuesta) => {
+   respuesta.end('Hola mundo')
+})  //
+
+Una de las tareas del módulo HTTP es la de crear un servidor. 
+La función callback que enviamos a createServer() recibe dos parámetros que son la petición y la respuesta. 
+La petición contiene datos de la petición realizada.
+La respuesta la usaremos para enviarle datos al cliente que hizo la petición. 
+De modo que "respuesta.end()" sirve para terminar la petición y enviarle datos al cliente.
+
+
+//  const connectedServer = server.listen(8080, () => {
+    console.log(`Servidor Http escuchando en el puerto ${connectedServer.address().port}`)
+})  //
+
+
+Con esto le decimos al servidor que escuche en el puerto(convencion 8080. Puede ser cualquiera)
+"listen()" recibe también una función callback que simplemente, en esa función callback indico que estoy listo y escuchando en el puerto configurado.
+Listen, además, devuelve un objeto que contiene los datos del servidor conectado.
+
+//express.js 
+Express es un framework web minimalista, con posibilidad de ser utilizado tanto para aplicaciones/páginas web como para aplicaciones de servicios.
+
+Instalación desde la consola:
+npm install express
+
+Express nos permite definir, para cada tipo de petición HTTP
+que llegue a una determinada URL, qué acciones debe tomar, mediante la definición de un callback para cada caso que consideremos necesario incluir en nuestra API.
+
+
+const express = require ("express")
+
+El objeto obtenido luego del import es una función. Al ejecutarla, nos devolverá la aplicación servidor
+const app = express()
+
+que configuraremos posteriormente con los detalles de nuestra aplicación. 
+
+//Conexión del servidor
+Debemos indicar en qué puerto de nuestra computadora queremos que nuestra aplicación comience a escuchar peticiones. Este puerto será de uso exclusivo de nuestro servidor, y no podrá ser compartido con otras aplicaciones.
+
+const PORT = 8080
+
+const server = app.listen(PORT, () => {
+   console.log(`Servidor http escuchando en el puerto ${server.address().port}`)
+})
+
+configuración tipo Get
+Cuando queremos obtener algún tipo de información del servidor utilizamos peticiones de tipo GET. Entonces, configuraremos en nuestro servidor un manejador para estas peticiones. Como respuesta, devolveremos el resultado deseado en forma de objeto.
+
+
+
+
 
