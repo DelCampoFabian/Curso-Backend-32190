@@ -125,6 +125,8 @@ y los servidores web lo iniciamos y no tiene fin  a noser que nosotros lo termin
 //HTTP : modulo nativo de NodeJS
 
 Trabaja con el protocolo HTTP, que es el que se utiliza en Internet para transferir datos en la Web.
+El protocolo se basa en el esquema PETICION - RESPUESTA.
+Existen CLIENTES que realizan solicitudes de transmision de datos, y un SERVIDOR que atienden esas peticiones
 Nos va a servir para crear un servidor HTTP que acepte solicitudes desde un cliente web.
 Llamado: require ('http').
 
@@ -181,7 +183,98 @@ const server = app.listen(PORT, () => {
 configuración tipo Get
 Cuando queremos obtener algún tipo de información del servidor utilizamos peticiones de tipo GET. Entonces, configuraremos en nuestro servidor un manejador para estas peticiones. Como respuesta, devolveremos el resultado deseado en forma de objeto.
 
+//Que es una API
 
+Es un conjunto de funciones y procedimientos que describen la manera en que un sistema puede comunicarse con otros.
+Permite la colaboración e interoperabilidad entre los sistemas desarrollados en distintas plataformas e incluso en distintos lenguajes.
+
+
+//REST = REpresentatonial State Transfer --> transferencia de estado representacional
+representacion = modelo o estructura con la que representamos algo
+estado = datos que contiene ese modelo o estructura
+Transferir un Estado de Representación implica el envío de datos (con una determinada estructura) entre dos partes.
+Los dos formatos más utilizados para este tipo de transferencias de datos son XML y JSON.
+
+//API REST 
+- Es un tipo de API que no dispone interfaz grafica
+- Se utiliza exclusivamente para comunicación entre sistemas, mediante el protocolo HTTP (peticion-respuesta)
+- Características:
+
+* Arquitectura cliente - servidor sin estado 
+Cada mensaje HTTP tiene toda la información necesaria para comprender la petición. 
+Como resultado, ni el cliente ni el servidor necesitan recordar ningún estado de las comunicaciones entre mensajes. 
+Esta restricción mantiene al cliente y al servidor débilmente acoplados: el cliente no necesita conocer los detalles de implementación del servidor y el servidor se “despreocupa” de cómo son usados los datos que envía al cliente.
+
+* Cacheable 
+
+Debe admitir un sistema de almacenamiento en Cache
+La infraestructura de red debe soportar una cache de varios niveles
+Este almacenamiento evita repetir varias conexiones entre el cliente y el servidor 
+ej: estoy en mi perfil de fb y estoy viendo mi info. Si recargo voy a hacer la peticion al servidor para que me traiga la info de mi perfil. Ahora si yo vuelvo a hacer esa peticion, cache ya va a tener almacenada esta busqueda de mi perfil y me lo va a devolver si tener que ir a los servidores a buscar la info de mi perfil.
+
+
+* Operaciones comunes
+
+Todos los recursos detrás de nuestra API deben poder ser consumidos mediante peticiones HTTP.
+Con frecuencia estas operaciones se equiparan a las operaciones CRUD en bases de datos (en inglés: Create, Read, Update, Delete, en español: Alta, Lectura, Modificación, y Baja). 
+Al tratarse de peticiones HTTP, éstas deberán devolver con sus respuestas los correspondientes códigos de estado, informando el resultado de las mismas. 
+
+
+* Interfaz uniforme
+
+En un sistema REST, cada acción (más correctamente, cada recurso) debe contar con una URI (Uniform Resource Identifier), un identificador único. 
+Ésta nos facilita el acceso a la información, tanto para consultarla, como para modificarla o eliminarla, pero también para compartir su ubicación exacta a terceros.
+URL basicamente
+
+* Utilizacion de hipermedios
+
+Cada vez que se hace una petición al servidor y este devuelve una respuesta, parte de la información devuelta pueden ser también recursos de navegación asociada a otros recursos del cliente.
+Como resultado de esto, es posible navegar de un recurso REST a muchos otros, simplemente siguiendo enlaces sin requerir el uso de registros u otra infraestructura adicional. 
+
+
+// Principios RESTful API
+
+Una aplicación RESTful requiere un enfoque de diseño distinto a la forma típica de pensar en un sistema: lo contrario a RPC
+RPC (llamadas a procedimientos remotos) basa su funcionamiento en las operaciones que puede realizar el sistema (acciones, usualmente verbos). Ej: getUsuario()
+En REST, por el contrario, el énfasis se pone en los recursos (usualmente sustantivos), especialmente en los nombres que se le asigna a cada tipo de recurso. Ej. Usuarios.
+Cada funcionalidad relacionada con este recurso tendría sus propios identificadores y peticiones en HTTP.
+
+// Express: atencion de peticiones
+
+Para definir cómo se debe manejar cada tipo de petición usaremos los métodos nombrados de acuerdo al tipo de petición que manejan: get(), post(), delete(), y put().
+primer argumento ("/Ruta/"). Solo manejarán peticiones que coincidan en ruta y en tipo. El segundo argumento será el callback ( req, res ) => { } con que se manejará la petición.
+
+Las peticiones pueden tener detalles sobre la búsqueda que se quiere realizar.
+
+Estos parámetros se agregan al final de la URL, mediante un signo de interrogación ‘?’ y enumerando pares ‘clave=valor’ separados por un ampersand ‘&’ si hay más de uno. 
+ej: /miruta?clave=valor&segundaClave=valor.
+Al recibirlos, los mismos se encontrarán en el objeto ‘query’ dentro del objeto petición (req).
+
+Ejemplo de petición GET con identificador 
+
+En caso de que se quiera acceder a un recurso en particular ya conocido, es necesario enviar un identificador unívoco en la URL.
+
+Para enviar este tipo de parámetros, el mismo se escribirá luego del nombre del recurso (en la URL), separado por una barra. 
+Por ejemplo: http: //miservidor.com/api/mensajes/1 
+
+Para acceder al campo identificador desde el lado del servidor, Express utiliza una sintaxis //miservidor.com/api/mensajes/ --> :identificador , al especificar la ruta escuchada. Luego, para acceder al valor del mismo, se hará a través del campo ‘params’ del objeto petición (req) recibido en el callback.
+
+//petición POST
+Algunas peticiones requieren el envío de algún dato desde el cliente hacia el servidor. Por ejemplo, al crear un nuevo registro. Este es el caso de la petición POST. Para acceder al cuerpo del mensaje, incluído en la petición, lo haremos a través del campo ‘body’ del objeto petición recibido en el callback. En este caso, estamos devolviendo como respuesta el mismo registro que se envió en la petición.
+const mensaje = req.body
+
+
+// Ruteo en express 
+
+La clase Router se usa para crear un nuevo objeto de enrutador, que es una instancia aislada de middleware y rutas. Se utiliza cuando se desea crear un nuevo objeto de enrutador para manejar solicitudes.
+
+El Router de express nos permite crear múltiples "mini aplicaciones" para que se pueda asignar un espacio de nombre al api público, autenticación y otras rutas en sistemas de enrutamiento separados.
+
+// Servicio de archivos estaticos en Express
+
+Para el servicio de archivos estáticos se utiliza la función de middleware incorporada express.static.
+Esta función recibe como parámetro el nombre del directorio que contiene los activos estáticos.
+app.use(express.static('public'));
 
 
 
