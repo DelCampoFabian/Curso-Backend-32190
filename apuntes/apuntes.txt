@@ -277,4 +277,19 @@ Esta función recibe como parámetro el nombre del directorio que contiene los a
 app.use(express.static('public'));
 
 
+// Websocket
+Ej de uso: se utilizan en app que requieren una conexion en tiempo real entre el cliente y el sv.
+Por ejemplo: juegos - plataformas de compra y venta - chats - tickets de noticias - redes sociales 
 
+socket.io libreria que vamos a utilizar para crear las conexiones de Websocket entre el cliente y el sv
+tiene 2 partes:
+- Una biblioteca del lado del cliente que se ejecuta en el navegador
+- Una biblioteca del lado del servidor para nodeJs
+
+METODO EMIT : nos permite enviar un mensaje del servidor al cliente. ("primer argunmento=  clave", "segundo argumento= el mensaje")
+
+
+//Lado del cliente 
+socket.on("La clave que puse en el primer argumento en el lado del servidor", callback con instrucciones )
+
+METODO IO.SOCKET.EMIT = Envia un mensaje a todos los clientes que esten conectados al canal del Websocket
