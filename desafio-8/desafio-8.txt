@@ -1,0 +1,47 @@
+Crear colleccion
+Terminal 1 = mongod --dbpath "./desafio-8-mongo"
+Terminal 2 = 
+// mongosh
+// use ecommerce
+
+1- 
+// db.mensajes.insertMany([{email: "pepe@gmail.com", message: "hola soy pepe", timestamp: ISODate()},{email: "juan@gmail.com", message: "hola soy juan", timestamp: ISODate()},{email: "miguel@gmail.com", message: "hola soy miguel", timestamp: ISODate()},{email: "pepe@gmail.com", message: "necesito ayuda", timestamp: ISODate()},{email: "juan@gmail.com", message: "el precio del producto?", timestamp: ISODate()},{email: "pepe@gmail.com", message: "tienen en stock el producto", timestamp: ISODate()},{email: "miguel@gmail.com", message: "un momento", timestamp: ISODate()},{email: "juan@gmail.com", message: "ok", timestamp: ISODate()},{email: "pepe@gmail.com", message: "hay cupones de descuento?", timestamp: ISODate()},{email: "pepe@gmail.com", message: "espero, gracias", timestamp: ISODate()}
+])
+2-
+// db.productos.insertMany([{title: "TV", price: 700, thumbnail: "https://picsum.photos/200/300"},{title: "Peluche de oso", price: 64, thumbnail: "https://picsum.photos/200/300"},{title: "Teclado", price: 100, thumbnail: "https://picsum.photos/200/300"},{title: "Silla", price: 150, thumbnail: "https://picsum.photos/200/300"},{title: "Mesa portatil", price: 200, thumbnail: "https://picsum.photos/200/300"},{title: "cocina", price: 150, thumbnail: "https://picsum.photos/200/300"},{title: "jeans", price: 120, thumbnail: "https://picsum.photos/200/300"},{title: "laptop", price: 2500, thumbnail: "https://picsum.photos/200/300"},{title: "TV ultra", price: 900, thumbnail: "https://picsum.photos/200/300"},{title: "Celular", price: 800, thumbnail: "https://picsum.photos/200/300"},])
+
+3-
+// db.mensajes.find()
+// db.productos.find()
+
+4- 
+// db.mensajes.estimatedDocumentCount()
+// db.productos.estimatedDocumentCount()
+
+5-
+//A-
+db.productos.insertOne({title: "laptop ultra", price: 3200, thumbnail: "https://picsum.photos/200/300"})
+
+//B- 
+
+db.productos.find({price: {$lt: 1000}})
+db.productos.find({price: {$in: [1000, 3000]}})
+db.productos.find({price: {$gt: 3000}})
+db.productos.find({}, {"title": 1}).sort({price: 1}).skip(2).limit(1)
+
+//C- 
+
+db.productos.update({},{$set:{stock:100}},{upsert:false,multi:true})
+
+//D- 
+
+db.productos.update({price: {$gt: 4000}},{$set:{stock:0}},{upsert:false,multi:true})
+
+//E- 
+
+db.productos.deleteMany({price: {$lt: 1000}})
+
+6-
+
+use admin
+db.createUser({user: "pepe", pwd: "asd456", roles: [{role: "read", db: "ecommerce"}]})
