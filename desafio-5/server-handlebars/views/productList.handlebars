@@ -1,7 +1,7 @@
 {{#> body }}
   <h1>Vista de Productos</h1>
 
-  {{#if products}}
+  {{#if products}} {{!-- Me fijo si existen los products recibo los products --}}
   <div class="table-responsive">
     <table class="table table-hover">
       <thead>
@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each products}}
+        {{#each products}} {{!--si existen, los recorro y armo la tabla con sus valores --}}
         <tr>
           <td>{{{title}}}</td>
           <td>{{{price}}}</td>

@@ -1,9 +1,9 @@
 const socket = io.connect()
 // PRODUCTOS
-const productForm = document.getElementById('productForm')
+const productForm = document.getElementById('productForm')// form de productForm.pug
 
-const tableProducts = document.getElementById('tableProducts')
-const productFormError = document.getElementById('productFormError')
+const tableProducts = document.getElementById('tableProducts') // tabla de listaProducts.pug
+const productFormError = document.getElementById('productFormError') // Div para renderizar el error
 
 const messageList = document.getElementById('messageList')
 const chatForm = document.getElementById('chatForm')

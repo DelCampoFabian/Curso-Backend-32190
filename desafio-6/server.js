@@ -33,8 +33,8 @@ async function main(socket) {
   console.log('Nuevo cliente')
   try {
     const messages = await chatDB.getAllMessages()
-    const products = await productsDB.getAllProducts()
-    socket.emit(keys.PRODUCTS, products)
+    const products = await productsDB.getAllProducts() // Traigo los productos
+    socket.emit(keys.PRODUCTS, products) // mando al cliente los productos
     socket.emit(keys.CHAT_MESSAGES, messages)
     socket.on(keys.ADD_PRODUCT, sendProducts)
     socket.on(keys.CHAT_ADD_MESSAGE, sendMessages)

@@ -1,8 +1,9 @@
-{{#> body }}
+{{#> body }} {{!-- Recibo el post --}}
   <h1>Crear Producto</h1>
-  {{#if error}}
+  {{#if error}} {{!-- Si hay un error muestro el error  --}}
     <div class="alert alert-danger">{{error}}</div>
   {{/if}}
+  {{!-- Si no hay errores pongo las caract del productoen el value del input --}}
   <form action="/product" method="POST">
     <div class="mb-3">
       <label for="title" class="form-label">Nombre</label>

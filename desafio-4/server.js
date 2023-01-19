@@ -1,26 +1,34 @@
+// CONSIGNA
+
+/* Realizar un proyecto de servidor basado en node.js y express que ofrezca una API RESTful de productos. En detalle, que incorpore las siguientes rutas:
+GET '/api/productos' -> devuelve todos los productos.
+GET '/api/productos/:id' -> devuelve un producto según su id.
+POST '/api/productos' -> recibe y agrega un producto, y lo devuelve con su id asignado.
+PUT '/api/productos/:id' -> recibe y actualiza un producto según su id.
+DELETE '/api/productos/:id' -> elimina un producto según su id.d
+ */
+
 const express = require("express")
 const app = express()
-const routerProducts = require("express").Router()
+const routerProducts = require("express").Router() // Creo la ruta de la API
 const products = require("./products")
 
 //clase contenedora
 
-class ProductsDB {
+class ProductsDB { //Clase contenedora 
     constructor() {
         this.products = products
-        
     }
-
+    //METODOS PARA VER - AGREGAR - EDITAR - ELIMINAR productos  
     getAllProducts() {
-        return this.products
+        return this.products //Muestra todos los productos 
     }
 
     getProductById(id) {
-        return this.products.find(obj => obj.id === parseInt(id))
+        return this.products.find(obj => obj.id === parseInt(id)) // Obtiene el producto que coincida con el ID pasado x parametro
     }
 
-    postProduct({title,price,thumbnail}) {
-
+    postProduct({title,price,thumbnail}) { // Recibe el nuevo producto, le agrega un ID y lo pushea al array donde estan los productos
         let newId 
         if(this.products.length === 0){
             newId = 1
@@ -37,16 +45,16 @@ class ProductsDB {
         return newProduct
     }
 
-    putProduct({id,title,price,thumbnail}) {
+    putProduct({id,title,price,thumbnail}) { // Busca el Indice donde esta el producto
         const index = this.products.findIndex(product => product.id === parseInt(id))
         if (index < 0) return null
-        const updateProduct = {
+        const updateProduct = { // Lo actualiza 
             id: parseInt(id),
             title,
             price,
             thumbnail
         }
-        this.products.splice(index, 1, updateProduct)
+        this.products.splice(index, 1, updateProduct) // Lo reemplaza por el nuevo producto
         return updateProduct
     }
 
@@ -58,36 +66,32 @@ class ProductsDB {
     }
 }
 
-const productDB = new ProductsDB()
+const productDB = new ProductsDB() // Instancia un nuevo producto [{productos},{productos}] || []
 
-
+// Lineas para que express entienda que en el body va a recibir JSON
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: true})) 
+// Linea para mostrar los archivos estaticos
 app.use(express.static(__dirname + "/public"))
+// Linea para instanciar las rutas 
 app.use('/api/productos', routerProducts)
 
 
-
-routerProducts.get('/', getAllProducts)
-routerProducts.get('/:id', getProductById)
-routerProducts.post('/', validateProduct, postProduct)
-routerProducts.put('/:id', validateProduct, putProduct)
-routerProducts.delete('/:id', deleteProduct)
-
-function getAllProducts(req, res) {
+//INICIO VERBOS 
+routerProducts.get('/', (req, res) => {
     res.json(productDB.getAllProducts())
-}
+})
 
-function getProductById(req, res) {
+routerProducts.get('/:id', (req, res) => {
     const { id } = req.params
     const product = productDB.getProductById(id)
     if (!product) return res.json({
         error: 'producto no encontrado'
     })
     res.json(product)
-}
+})
 
-function postProduct(req, res) {
+routerProducts.post('/', validateProduct, (req, res) => {
     const {title,price,thumbnail} = req.body
     const newProduct = productDB.postProduct({
         title,
@@ -95,9 +99,9 @@ function postProduct(req, res) {
         thumbnail
     })
     res.json(newProduct)
-}
+})
 
-function putProduct(req, res) {
+routerProducts.put('/:id', validateProduct, (req, res) => {
     const { id } = req.params
     const {title,price,thumbnail } = req.body
     const updateProduct = productDB.putProduct({
@@ -110,9 +114,9 @@ function putProduct(req, res) {
         error: 'producto no encontrado para editar'
     })
     res.send(updateProduct)
-}
+})
 
-function deleteProduct(req, res) {
+routerProducts.delete('/:id',(req, res) => {
     const { id } = req.params
     const deletedId = productDB.deleteProducto(id)
     if (!deletedId) return res.json({
@@ -121,7 +125,9 @@ function deleteProduct(req, res) {
     res.json({
         id
     })
-}
+})
+//FIN VERBOS 
+
 
 function validateProduct(req, res, next) {
     const { title,price,thumbnail } = req.body

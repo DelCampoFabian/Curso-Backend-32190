@@ -1,6 +1,8 @@
 div
   h2 Crear Producto
-  div(id="productFormError")
+      // Si hay un error voy a renderizar el error
+  div(id="productFormError") 
+      
   form(id="productForm")
     div.mb-3
       label(for="title" class="form-label") Nombre
@@ -12,3 +14,5 @@ div
       label(for="thumbnail" class="form-label") Foto 
       input(type="text" id="thumbnail" class="form-control")
     button(class="btn btn-success") Crear Producto
+// Formulario normal para hacer el POST de los productos
+
