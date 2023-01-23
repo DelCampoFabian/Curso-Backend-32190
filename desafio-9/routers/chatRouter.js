@@ -1,3 +1,5 @@
+//  ROUTERS = Ejecuta los controllers
+
 const { Router } = require("express");
 
 const { getChat } = require(`../controller/chatController`);

@@ -13,15 +13,23 @@ const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 
+//----------------------------------// 
+
 app.use(express.static(`./public`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//----------------------------------//
+
 app.set(`views`, `./views`);
 app.set(`view engine`, `ejs`);
 
+//----------------------------------//
+
 const PORT = 8081;
 httpServer.listen(PORT, () => console.log(`Servidor escuchando el puerto ${PORT}`));
+
+//----------------------------------//
 
 let users = [];
 
